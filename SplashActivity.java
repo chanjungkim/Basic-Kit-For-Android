@@ -1,35 +1,28 @@
+import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
+import android.os.Handler;
 
-import android.os.Bundle
-import android.os.Handler
-import android.support.v7.app.AppCompatActivity
+public class Splash extends Activity {
+    /** Duration of wait **/
+    private final int SPLASH_DISPLAY_LENGTH = 1000;
 
-class SplashActivity: AppCompatActivity() {
+    /** Called when the activity is first created. */
+    @Override
+    public void onCreate(Bundle icicle) {
+        super.onCreate(icicle);
+        setContentView(R.layout.splashscreen);
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_splash)
-        scheduleSplashScreen()
-    }
-    private fun scheduleSplashScreen() {
-        val splashScreenDuration = getSplashScreenDuration()
-        Handler().postDelayed(
-                {
-                    // After the splash screen duration, route to the right activities
-                    val user = UserDb.getCurrentUser()
-                    routeToAppropriatePage(user)
-                    finish()
-                },
-                splashScreenDuration
-        )
-    }
-    private fun getSplashScreenDuration() = 2000L
-    private fun routeToAppropriatePage(user: User) {
-        // Example routing
-        when {
-            user == null -> OnboardingActivity.start(this)
-            user.hasPhoneNumber() -> EditProfileActivity.start(this)
-            user.hasSubscriptionExpired() -> PaymentPlansActivity.start(this)
-            else -> HomeActivity.start(this)
-        }
+        /* New Handler to start the Menu-Activity 
+         * and close this Splash-Screen after some seconds.*/
+        new Handler().postDelayed(new Runnable(){
+            @Override
+            public void run() {
+                /* Create an Intent that will start the Menu-Activity. */
+                Intent mainIntent = new Intent(Splash.this,Menu.class);
+                Splash.this.startActivity(mainIntent);
+                Splash.this.finish();
+            }
+        }, SPLASH_DISPLAY_LENGTH);
     }
 }
