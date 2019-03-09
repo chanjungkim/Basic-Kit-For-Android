@@ -1,22 +1,22 @@
+package org.koreanlab.message_simulator.lib;
+
 import android.app.Activity;
 import android.content.Context;
 import android.os.Build;
-import android.support.annotation.NonNull;
-import android.support.v4.content.ContextCompat;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 
-public class UIlib {
+import androidx.annotation.NonNull;
+
+public class UILib {
     private static Context mContext;
-    private static UIlib instance;
+    private static UILib instance;
     int newUiOptions = 0;
 
-    public static UIlib getInstance(@NonNull Context context) {
+    public static UILib getInstance(@NonNull Context context) {
         if (instance == null) {
-            synchronized (UIlib.class) {
+            synchronized (UILib.class) {
                 if (instance == null) {
-                    instance = new UIlib();
+                    instance = new UILib();
                     mContext = context;
                 }
             }
